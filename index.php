@@ -1,16 +1,86 @@
-<?
-function JSONtoAmount($value) {
-    return round(value * 1e8);
-}
-  require_once 'jsonRPCClient.php';
+<?php
+	//Error reporting for developmental purposes
+	error_reporting(E_ALL);
+	ini_set('display_errors', true);
 
-  $bitcoin = new jsonRPCClient('http://BCCasino:Qwerty123456@127.0.0.1:8332/');
+	define("PAGE_THEME", "Default");
+	define("ABSOLUTEPATH", dirname(__FILE__)); //For templating
 
-  echo "<pre>\n";
-  print_r($bitcoin->getaccountaddress("test"));
-  echo "\n";
-  print_r($bitcoin->getbalance("test",3));
-  echo "\n";
-  echo "Received: ".$bitcoin->getreceivedbyaddress("18BMfDnLKrFP4xPAAPU7cF87fzQ4oEmnxE")."\n";
-  echo "</pre>"
+	session_start();
+
+	//Load everything
+	require_once("lib/Require.lib.php");
+	require_folder_once("lib/", array(".class.php"), false);
+	require_once("Settings.php");
+
+	/*
+	try {
+		DB::Connect(DB_Host, DB_User, DB_Pass, DB_Name, DB_Persist);
+	} catch (Exception $E) {
+		$Header = new Page("Header");
+		$Footer = new Page("Footer");
+		$Page = new Page("Error");
+		$Header->Page = $Page;
+		$Header->Footer = $Footer;
+		$Page->Header = $Header;
+		$Page->Footer = $Footer;
+		$Footer->Header = $Header;
+		$Footer->Page = $Page;
+		$Page->Error = "The database is down, please try again later.";
+		$Page->LoadPage();
+		echo $Header->ParseTemplate();
+		echo $Page->ParseTemplate();
+		echo $Footer->ParseTemplate();
+		die();
+	}
+ 	*/
+
+	function JSONtoAmount($value) {
+	    return round(value * 1e8);
+	}
+
+	$Header = new Page("Header");
+	$Footer = new Page("Footer");
+	$Page = new Page();
+
+	$Header->Page = $Page;
+	$Header->Footer = $Footer;
+	$Page->Header = $Header;
+	$Page->Footer = $Footer;
+	$Footer->Header = $Header;
+	$Footer->Page = $Page;
+
+
+	if (isset($_GET["notemplate"])) {
+		$Page->LoadPage();
+		echo $Page->ParseTemplate();
+		die();
+	}
+
+	try {
+		$Page->LoadPage(); //Page gets first go
+		$Header->LoadPage();
+		$Footer->LoadPage();
+	} catch (Exception $E) {
+		$Header = new Page("Header");
+		$Footer = new Page("Footer");
+		$Page = new Page("Error");
+		$Header->Page = $Page;
+		$Header->Footer = $Footer;
+		$Page->Header = $Header;
+		$Page->Footer = $Footer;
+		$Footer->Header = $Header;
+		$Footer->Page = $Page;
+		$Page->Error = "Something went wrong while loading the page you requested... Please try again later.";
+		$Page->LoadPage();
+		echo $Header->ParseTemplate();
+		echo $Page->ParseTemplate();
+		echo $Footer->ParseTemplate();
+		die();
+	}
+
+	//ob_start("ob_gzhandler");
+	echo $Header->ParseTemplate();
+	echo $Page->ParseTemplate();
+	echo $Footer->ParseTemplate();
 ?>
