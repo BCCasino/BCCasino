@@ -1,10 +1,10 @@
 <?php
 	//DB SETTINGS -- make this read from a file..?
-	define("DB_HOST", "");
-	define("DB_USER", "");
-	define("DB_PASS", "");
-	define("DB_NAME", "");
-	define("DB_PERSIST", "");
+	define("DB_HOST", "localhost");
+	define("DB_USER", "BCCasino");
+	define("DB_PASS", "Qwerty123456");
+	define("DB_NAME", "BCCasino");
+	define("DB_PERSIST", "");//?
 	
 	//Add the pages...
 	Page::Add("Error", true);
