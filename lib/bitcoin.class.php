@@ -8,32 +8,32 @@ class Bitcoin
 	}
 	public function getBalance($user)
 	{
-		return $bitcoin->getbalance($user->username);
+		return $this->bitcoin->getbalance($user->getUsername());
 	}
 	public function debit($user,$amount)
 	{
 		if(getBalance($user)>$amount)
-			return $this->bitcoin->move($user->username,"",(float)$amount,3);
+			return $this->bitcoin->move($user->getUsername(),"",(float)$amount,3);
 		else
 			return -1;
 	}
 	public function credit($user,$amount)
 	{
-		if(getbalance("")<$amount)
-			throw new exception("CASINOS BROKE SORRY!");
-		return $this->bitcoin->move("",$user->username,(float)$amount,3);
+		if($this->bitcoin->getbalance("")<$amount)
+			throw new exception("CASINOS BROKE SORRY!");		
+		return $this->bitcoin->move("",$user->getUsername(),(float)$amount,3);
 	}
 	
 	public function getDepositAddress($user)
 	{
-		return $this->bitcoin->getaccountaddress($user->username);
+		return $this->bitcoin->getaccountaddress($user->getUsername());
 	}
 	
 	public function withdraw($user,$amount)
 	{
 		if(getbalance($user)<$amount)
 			throw new exception("User is trying to withdraw more than they have!");
-		return $this->bitcoin->sendfrom($user->username,$user->bcAddress,(float)$amount,3,"UBCCasino","UBCCasino");
+		return $this->bitcoin->sendfrom($user->getUsername(),$user->bcAddress,(float)$amount,3,"UBCCasino","UBCCasino");
 	}
 	
 	public function getTransaction($txid)
@@ -43,7 +43,7 @@ class Bitcoin
 	
 	public function listTransactions($user,$cnt=10)
 	{
-		return $this->bitcoin->listtransactions($user,$cnt);
+		return $this->bitcoin->listtransactions($user->getUsername(),$cnt);
 	}
 	
 	public function getDifficulty()
