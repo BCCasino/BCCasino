@@ -33,7 +33,14 @@ class Bitcoin
 	{
 		if(getbalance($user)<$amount)
 			throw new exception("User is trying to withdraw more than they have!");
-		return $this->bitcoin->sendfrom($user->getUsername(),$user->bcAddress,(float)$amount,3,"UBCCasino","UBCCasino");
+		//round down to nearest cent
+		//Currently we will be paying any TX fees, as there is no way through api to get what they were.
+		$rounded = $amount *100.0;
+		$rounded = floor($rounded);		
+		$rounded = $rounded /100.0;
+		if($rounded <0)
+			throw new exception("User has insufficient funds for withdrawl");
+		return $this->bitcoin->sendfrom($user->getUsername(),$user->bcAddress,(float)$rounded,3,"UBCCasino","UBCCasino");
 	}
 	
 	public function getTransaction($txid)
