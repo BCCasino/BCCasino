@@ -8,7 +8,7 @@ class Bitcoin
 	}
 	public function getBalance($user)
 	{
-		return $this->bitcoin->getbalance($user->getUsername());
+		return $this->bitcoin->getbalance($user->getUsername(),3);
 	}
 	public function debit($user,$amount)
 	{
@@ -40,7 +40,7 @@ class Bitcoin
 		$rounded = $rounded /100.0;
 		if($rounded <0)
 			throw new exception("User has insufficient funds for withdrawl");
-		return $this->bitcoin->sendfrom($user->getUsername(),$user->bcAddress,(float)$rounded,3,"UBCCasino","UBCCasino");
+		return $this->bitcoin->sendfrom($user->getUsername(),$user->bcAddress,(float)$rounded,1,"UBCCasino","UBCCasino");
 	}
 	
 	public function getTransaction($txid)
