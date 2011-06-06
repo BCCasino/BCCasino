@@ -16,9 +16,9 @@
 	require_folder_once("lib/db", array(".class.php"), false);
 	require_once("Settings.php");
 
-	/*
+	
 	try {
-		DB::Connect(DB_Host, DB_User, DB_Pass, DB_Name, DB_Persist);
+		DB::Connect(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PERSIST);
 	} catch (Exception $E) {
 		$Header = new Page("Header");
 		$Footer = new Page("Footer");
@@ -36,7 +36,7 @@
 		echo $Footer->ParseTemplate();
 		die();
 	}
- 	*/
+ 	
 
 	function JSONtoAmount($value) {
 	    return round(value * 1e8);
