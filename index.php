@@ -10,8 +10,7 @@
 
 	//Load everything
 	require_once("lib/Require.lib.php");
-	require_folder_once("lib/", array(".class.php"), false);
-	require_once("lib/thirdparty/jsonRPCClient.php");
+	require_folder_once("lib/", array(".class.php"), true);
 	require_once("Settings.php");
 
 	/*
