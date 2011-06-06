@@ -10,6 +10,10 @@ class Bitcoin
 	{
 		return $this->bitcoin->getbalance($user->getUsername(),3);
 	}
+	public function getCasinoBalance()
+	{
+		return $this->bitcoin->getbalance("",3);
+	}
 	public function debit($user,$amount)
 	{
 		if(getBalance($user)>$amount)

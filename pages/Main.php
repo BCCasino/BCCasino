@@ -2,5 +2,6 @@
 	$user = new User("Test");
 	
 	$bitcoin = new Bitcoin();	
-	print_r($bitcoin->listtransactions($user));
+	$slot = new SlotMachine();
+	print_r($slot->SpinReels());
 ?>
