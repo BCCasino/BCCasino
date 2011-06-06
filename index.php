@@ -10,7 +10,10 @@
 
 	//Load everything
 	require_once("lib/Require.lib.php");
-	require_folder_once("lib/", array(".class.php"), true);
+	require_folder_once("lib/", array(".class.php"), false);
+	require_folder_once("lib/standard", array(".class.php"), false);
+	require_folder_once("lib/thirdparty", array(".class.php"), false);
+	require_folder_once("lib/db", array(".class.php"), false);
 	require_once("Settings.php");
 
 	/*

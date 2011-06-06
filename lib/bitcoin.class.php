@@ -12,17 +12,17 @@
 			
 			return -1;
 		}
-		public function credit($user,$amount) {
+		public function credit(User $user, $amount) {
 			if ($this->bitcoin->getbalance("") < $amount)
 				throw new Exception("CASINOS BROKE SORRY!");		
 			return $this->bitcoin->move("", $user->getUsername(), (float)$amount, 3);
 		}
 		
-		public function getDepositAddress($user) {
+		public function getDepositAddress(User $user) {
 			return $this->bitcoin->getaccountaddress($user->getUsername());
 		}
 		
-		public function withdraw($user,$amount) {
+		public function withdraw(User $user, $amount) {
 			if (getbalance($user) < $amount)
 				throw new Exception("User is trying to withdraw more than they have!");
 			//round down to nearest cent
@@ -39,7 +39,7 @@
 			return $this->bitcoin->gettransaction($txid);
 		}
 		
-		public function listTransactions($user, $cnt=10) {
+		public function listTransactions(User $user, $cnt=10) {
 			return $this->bitcoin->listtransactions($user->getUsername(), $cnt);
 		}
 		
