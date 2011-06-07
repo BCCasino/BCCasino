@@ -7,25 +7,26 @@ class SlotMachine
 	*/
 	private $name ="µBTC Slot";
 	
-	private $symbols = array("TripleBar" => 
+	private $symbols = array("3bar" => 
 						array ("img" => "img/slots/tbar.png",
-							   "probability" => 0.01,
-							   "class" => array("")),
-					 "DoubleBar" => 
+							   "class" => array("bar","red")),
+					 "2bar" => 
 						array ("img" => "img/slots/dbar.png",
-							   "probability" => 0.02,
-							   "class" => array("")),
-					 "Bar" 		 => 
+							   "class" => array("bar","white")),
+					 "1bar" 		 => 
 						array ("img" => "img/slots/bar.png",
-							   "probability" => 0.05,
-							   "class" => array("")),
-					 "Cherry"	 => 
-						array ("img" => "img/slots/cherry.png",
-							   "probability" => 0.1,
-							   "class" => array("")),
-					 "Blank" 	 =>
+							   "class" => array("bar","blue")),
+					 "red7"	 => 
+						array ("img" => "img/slots/red7.png",
+							   "class" => array("seven","red")),
+					 "white7"	 => 
+						array ("img" => "img/slots/white7.png",
+							   "class" => array("seven","white")),
+					 "blue7"	 => 
+						array ("img" => "img/slots/blue7.png",
+							   "class" => array("blue","seven")),
+					 "blank" 	 =>
 						array ("img" => "img/slots/blank.png",
-							   "probability" => 0.83,
 							   "class" => array("")));
 	
 	private $payTable = array(array ("percoin" => 1,"maxcoinbonus" => 0,"probability" = > 0.125, 
@@ -88,17 +89,9 @@ class SlotMachine
 								"TripleBar"));
 	public function SpinReels()
 	{
-	//foreach reel in our slot machine we make a random number between 0-1 (float)
-	//we then loop through our possibile symbols and add their probability until we
-	//get to the one that was randomly selected
-	//Note: the probability factors are how you can adjust the long term payout of the machine
-	//IE: if the odds of triplebar showing up is 0.01, then three triple bars = 0.01*0.01*0.01 or 
-	//1 in 1 million
-	//once this is done we add the reels spin to an output array and continue, once all reels are done
-	//we return
+//Based on how slots actually work:
+//based on paytable figure out if we get a win or not, then determine the reel positions
 	
-	//Another function will determine a winner based on a pay table
-
 		$Spin = array();
 		for($x =0; $x<count($this->reelLayout);$x++)
 		{
