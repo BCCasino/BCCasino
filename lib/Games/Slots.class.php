@@ -57,7 +57,7 @@ class SlotMachine
 							  array ("percoin" => 1200,"maxcoinbonus" => 200,"probability" = > 0.000011, 
 								"line" => array("red7","red7","red7")),
 							  array ("percoin" => 2400,"maxcoinbonus" => 400,"probability" = > 0.000004, 
-								"line" => array("red7","white7","blue7")))
+								"line" => array("red7","white7","blue7")));
 	
 	private $reelLayout = array( array ("Blank",
 								"Cherry",
