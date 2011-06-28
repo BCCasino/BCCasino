@@ -1,6 +1,6 @@
 exports.Spin =function() {
 		return Math.floor(Math.random()*52)+1;
-	};
+	}; 
 exports.SpinHash = function(spin) { 
 var salt = "";
 var chars = "0123456789ABCDEF";
