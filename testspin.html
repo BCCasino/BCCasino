@@ -1,0 +1,35 @@
+<html>
+	<head>
+		<script type="text/javascript" src="jquery-1.4.2.min.js"></script>
+		<script type="text/javascript">
+			var Wheel = {
+				currentDeg: 0,
+				currentSlice: 0,
+				spinToSlice: function(slice) {
+					var sliceDeg = slice * 6.923;
+					var currentZeroDeg = this.currentDeg - (this.currentSlice * 6.923)
+					var targetDeg = currentZeroDeg - sliceDeg + ((Math.floor((Math.random() * 2)) + 3) * 360);
+					
+					this.currentDeg = targetDeg;
+					this.currentSlice = slice;
+					
+					$("#wheel").css("-webkit-transform", "scale(1) rotate(" + targetDeg + "deg) translate(0px, 0px) skew(0deg, 0deg)");
+				}
+			};
+		</script>
+		<style>
+			#wheel {
+				-webkit-transition: all 10s ease-out;
+				-moz-transition: all 10s ease-out;
+				-o-transition: all 10s ease-out;
+				transition: all 10s ease-out;
+			}
+		</style>
+	</head>
+	<body>
+		<div align="center">
+			<span>\/</span><br />
+			<img src="images/wheel.png" id="wheel" />
+		</div>
+	</body>
+</html>
