@@ -14,12 +14,15 @@
 					this.currentSlice = slice;
 					
 					$("#wheel").css("-webkit-transform", "scale(1) rotate(" + targetDeg + "deg) translate(0px, 0px) skew(0deg, 0deg)");
+					setTimeout(function() {
+						alert("Spin finished!");
+					}, 10000);
 				}
 			};
 		</script>
 		<style>
 			#wheel {
-				-webkit-transition: all 10s ease-out;
+				-webkit-transition: all 10000ms ease-out;
 				-moz-transition: all 10s ease-out;
 				-o-transition: all 10s ease-out;
 				transition: all 10s ease-out;
