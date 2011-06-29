@@ -30,7 +30,7 @@ Class('BigSixWheel',{
 	methods: {
 		Spin: function() {
 			var spin = Math.floor(Math.random()*52)+1; 
-			this.setSpun([spin,exports.SpinHash(spin)]);
+			this.setSpun([spin,this.SpinHash(spin)]);
 			return this.getSpun(); 	
 		},
 		SpinHash: function(spin) {
