@@ -15,7 +15,7 @@ Class('BigSixWheel',{
 		PlayedBets: {
 			is: "rw",
 			init: []
-		}
+		},
 		Spun: {
 			is: "rw",
 			init: -1
