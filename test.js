@@ -1,7 +1,7 @@
-var bigsix = require('./bigsix.js');
+require('./bigsix.js');
 var bitcoin = require('bitcoin'); 
 var client = new bitcoin.Client('localhost', 8332, 'bitcoin', 'Qwerty123456'); 
-var Spin = bigsix.Spin();
+var bs = new BigSixWheel();
 
 var express = require('express'); var jade = require('jade'); app = express.createServer(); app.get('/', 
 function(req, res) {
