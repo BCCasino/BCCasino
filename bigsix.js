@@ -21,8 +21,7 @@ Class('BigSixWheel',{
 			init: -1
 		},
 		Bitcoin: {
-			is: "rw",
-			init: require('bitcoin')
+			is: "rw"			
 		},
 		Client: {
 			is: "rw"		
@@ -105,7 +104,8 @@ Class('BigSixWheel',{
 	},
 	after: {
 		initialize: function(props) {
-			this.setClient(new this.getBitcoin().Client('localhost', 8332, 'bitcoin', 'Qwerty123456'))
+			this.setBitcoin(require('bitcoin'));
+			this.setClient(new this.getBitcoin().Client('localhost', 8332, 'bitcoin', 'Qwerty123456'));
 			this.Seed();
 		}
 	}
