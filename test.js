@@ -5,9 +5,9 @@ var bs = new BigSixWheel();
 var results = new Object();
 for(var x=0;x<50000;x++){
 	var spin = bs.Spin()[0];
-	if(results[bs.getBets()[bs.getWheel()[spin]]] ===undefined)
-		results[bs.getBets()[bs.getWheel()[spin]]]=0;
-	results[bs.getBets()[bs.getWheel()[spin]]]++;
+	if(results[bs.getWheel()[spin]] ===undefined)
+		results[bs.getWheel()[spin]]=0;
+	results[bs.getWheel()[spin]]++;
 	console.log("Spin "+x+": "+spin);	
 }
 console.log("BETS: "+bs.getBets().length);
