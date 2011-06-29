@@ -6,9 +6,9 @@
 				currentDeg: 0,
 				currentSlice: 0,
 				spinToSlice: function(slice) {
-					var sliceDeg = slice * 6.923;
-					var currentZeroDeg = this.currentDeg - (this.currentSlice * 6.923)
-					var targetDeg = currentZeroDeg - sliceDeg + ((Math.floor((Math.random() * 2)) + 3) * 360);
+					var sliceDeg = 360 - (slice * 6.923);
+					var nextZero = Math.ceil(this.currentDeg / 360) * 360
+					var targetDeg = nextZero + sliceDeg + ((Math.floor((Math.random() * 2)) + 3) * 360);
 					
 					this.currentDeg = targetDeg;
 					this.currentSlice = slice;
