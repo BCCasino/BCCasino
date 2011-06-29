@@ -8,7 +8,7 @@ for(var x=0;x<5000;x++){
 	if(results[bs.getBets()[bs.getWheel()[spin]]] ===undefined)
 		results[bs.getBets()[bs.getWheel()[spin]]]=0;
 	results[bs.getBets()[bs.getWheel()[spin]]]++;
-	console.log("Spin "+x+": "+);	
+	console.log("Spin "+x+": "+spin);	
 }
 
 for(var y=0;y<bs.getBets().length;y++)
