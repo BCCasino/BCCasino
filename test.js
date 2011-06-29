@@ -2,7 +2,8 @@ require('./bigsix.js');
 var bitcoin = require('bitcoin'); 
 var client = new bitcoin.Client('localhost', 8332, 'bitcoin', 'Qwerty123456'); 
 var bs = new BigSixWheel();
-console.log("First Spin: "+bs.Spin());
+for(var x=0;x<150;x++)
+	console.log("Spin "+x+": "+bs.Spin());
 var express = require('express'); var jade = require('jade'); app = express.createServer(); app.get('/', 
 function(req, res) {
 	var local_var = "Balance: ";
