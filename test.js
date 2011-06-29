@@ -1,20 +1,17 @@
-require('./bigsix.js');
+require('./lib/bigsix.js');
 var bitcoin = require('bitcoin'); 
 var client = new bitcoin.Client('localhost', 8332, 'bitcoin', 'Qwerty123456'); 
 var bs = new BigSixWheel();
-for(var x=0;x<150;x++)
-	console.log("Spin "+x+": "+bs.Spin());
-var express = require('express'); var jade = require('jade'); app = express.createServer(); app.get('/', 
-function(req, res) {
-	var local_var = "Balance: ";
-		bigsix.MaxBet(function(mb) {
-				
-		
-		jade.renderFile('index.jade', {locals:{spin:Spin,local_var:"Max Bet: "+mb}}, function(err, 
-html){
-			res.send(html);
-		});
-	});
-});
-app.listen();
-console.log("Express server is started on port %s", app.address().port);
+var results = [];
+for(var x=0;x<5000;x++){
+	var spin = bs.Spin()[0];
+	if(results[bs.getBets()[bs.getWheel()[spin]]] ===undefined)
+		results[bs.getBets()[bs.getWheel()[spin]]]=0;
+	results[bs.getBets()[bs.getWheel()[spin]]]++;
+	console.log("Spin "+x+": "+);	
+}
+
+for(var y=0;y<bs.getBets().length;y++)
+{
+	console.log("BET: "+bs.getBets()[y] +" Count: "+results[bs.getBets()[y]]);
+}
