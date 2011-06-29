@@ -13,4 +13,4 @@ for(var x=0;x<500;x++){
 console.log("BETS: "+bs.getBets().length);
 for(var word in results)
 	console.log("BET: "+word +" Count: "+results[word]);
-}
+
