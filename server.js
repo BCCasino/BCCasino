@@ -58,13 +58,19 @@ var bs = new BigSixWheel();
 /////// ADD ALL YOUR ROUTES HERE  /////////
 
 server.get('/', function(req, res) {
-	bs.MaxBet(function(mb) {
+/*	bs.MaxBet(function(mb) {
 		res.render('index.ejs', {
 			locals : { 
 				footer: ''
 				,title : 'Home - Max Bet: ' + mb
 			}
 		});
+	});*/
+	res.render('index.ejs', {
+		locals : { 
+			footer: ''
+			,title : 'Home'
+		}
 	});
 });
 
