@@ -23,3 +23,23 @@ client.getBalance(function(err,ret)
 {
 	console.log("getBalance: "+sys.inspect(ret));
 });
+client.getBlockCount(function(err,ret)
+{
+	console.log("getBlockCount: "+sys.inspect(ret));
+});
+client.getGenerate(function(err,ret)
+{
+	console.log("getGenerate: "+sys.inspect(ret));
+});
+client.getBlockNumber(function(err,ret)
+{
+	console.log("getBlockNumber: "+sys.inspect(ret));
+});
+client.getConnectionCount(function(err,ret)
+{
+	console.log("getConnectionCount: "+sys.inspect(ret));
+});
+client.getAddressesByAccount("",function(err,ret)
+{
+	console.log("getAddressesByAccount: "+sys.inspect(ret));
+});
