@@ -3,7 +3,7 @@ var bitcoin = require('bitcoin');
 var client = new bitcoin.Client('localhost', 8332, 'bitcoin', 'Qwerty123456'); 
 var bs = new BigSixWheel();
 var results = new Object();
-for(var x=0;x<500000;x++){
+for(var x=0;x<500;x++){
 	var spin = bs.Spin()[0];
 	if(results[bs.getWheel()[spin]] ===undefined)
 		results[bs.getWheel()[spin]]=0;
@@ -14,3 +14,11 @@ console.log("BETS: "+bs.getBets().length);
 for(var word in results)
 	console.log("BET: "+word +" Count: "+results[word]);
 
+client.listAccounts(function(err,ret)
+{
+	console.log("ListAccounts: "+ret);
+});
+client.getBalance(function(err,ret)
+{
+	console.log("getBalance: "+ret);
+});
