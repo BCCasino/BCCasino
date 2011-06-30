@@ -13,12 +13,13 @@ for(var x=0;x<500;x++){
 console.log("BETS: "+bs.getBets().length);
 for(var word in results)
 	console.log("BET: "+word +" Count: "+results[word]);
-
+var sys = require('sys')
 client.listAccounts(function(err,ret)
 {
-	console.log("ListAccounts: "+ret);
+	console.log("ListAccounts: "+sys.inspect(ret));
 });
+
 client.getBalance(function(err,ret)
 {
-	console.log("getBalance: "+ret);
+	console.log("getBalance: "+sys.inspect(ret));
 });
