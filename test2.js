@@ -1,7 +1,7 @@
 /**
  * Bootstrap app.
  */
-
+var sys = require('sys')
 require.paths.unshift(__dirname + '/../../lib/');
 
 /**
@@ -56,31 +56,33 @@ app.listen(3000, function () {
 /**
  * Socket.IO server (single process only)
  */
-
-var io = sio.listen(app)
-  , nicknames = {};
-
+var Room = require('./lib/room.js');
+var io = sio.listen(app);
+var rooms = [];
+var rmchannel =0;
 io.sockets.on('connection', function (socket) {
-  socket.on('user message', function (msg) {
-    socket.broadcast.emit('user message', socket.nickname, msg);
-  });
-
-  socket.on('nickname', function (nick, fn) {
-    if (nicknames[nick]) {
-      fn(true);
-    } else {
-      fn(false);
-      nicknames[nick] = socket.nickname = nick;
-      socket.broadcast.emit('announcement', nick + ' connected');
-      io.sockets.emit('nicknames', nicknames);
-    }
-  });
-
-  socket.on('disconnect', function () {
-    if (!socket.nickname) return;
-
-    delete nicknames[socket.nickname];
-    socket.broadcast.emit('announcement', socket.nickname + ' disconnected');
-    socket.broadcast.emit('nicknames', nicknames);
-  });
+	var fnd = null;
+	for(var r in rooms)
+	{
+		var n = rooms[r].numberOfPlayers();		
+		if(n<5)
+		{
+			fnd = rooms[r];
+			console.log("Found a non-full room: "+fnd.getChannel());
+			break;
+		}
+	}
+	if(fnd!=null)
+	{
+		socket.emit("JoinRoom",fnd.getChannel());
+	}
+	else
+	{
+		fnd = new Room(io,'/'+rmchannel++);
+		console.log("Room created: "+fnd.getChannel());
+		socket.emit("JoinRoom",fnd.getChannel());
+		rooms.push(fnd);
+	}
 });
+
+//Setinterval and cleanup rooms every 5 minutes or so.

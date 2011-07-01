@@ -10,27 +10,21 @@ html
 
       socket.on('connect', function () {
         $('#chat').addClass('connected');
+        message('System','connected');
       });
 
-      socket.on('announcement', function (msg) {
-        $('#lines').append($('<p>').append($('<em>').text(msg)));
-      });
-
-      socket.on('nicknames', function (nicknames) {
-        $('#nicknames').empty().append($('<span>Online: </span>'));
-        for (var i in nicknames) {
-          $('#nicknames').append($('<b>').text(nicknames[i]));
-        }
-      });
-
-      socket.on('user message', message);
-      socket.on('reconnect', function () {
-        $('#lines').remove();
-        message('System', 'Reconnected to the server');
-      });
-
-      socket.on('reconnecting', function () {
-        message('System', 'Attempting to re-connect to the server');
+      socket.on('JoinRoom',function(msg){
+        message('System','Join Room: '+msg);
+        var socket2 = io.connect(msg);
+        socket2.on('connect', function() {
+          message('System','Joined room: '+msg);
+           socket2.on('spin',function(msg){
+             message('System','Spin: '+msg.spin+', salt: '+msg.salt);
+           });
+           socket2.on('newHash',function(msg){
+             message('System','Hash: '+ msg.hash);
+          });
+          })
       });
 
       socket.on('error', function (e) {
@@ -43,16 +37,7 @@ html
 
       // dom manipulation
       $(function () {
-        $('#set-nickname').submit(function (ev) {
-          socket.emit('nickname', $('#nick').val(), function (set) {
-            if (!set) {
-              clear();
-              return $('#chat').addClass('nickname-set');
-            }
-            $('#nickname-err').css('visibility', 'visible');
-          });
-          return false;
-        });
+        
 
         $('#send-message').submit(function () {
           message('me', $('#message').val());
@@ -68,11 +53,6 @@ html
       });
   body
     #chat
-      #nickname
-        form.wrap#set-nickname
-          p Please type in your nickname and press enter.
-          input#nick
-          p#nickname-err Nickname already in use
       #connecting
         .wrap Connecting to socket.io server
       #messages
