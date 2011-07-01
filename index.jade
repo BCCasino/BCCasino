@@ -24,6 +24,12 @@ html
            socket2.on('newHash',function(msg){
              message('System','Hash: '+ msg.hash);
           });
+           socket2.on('timeLeft',function(msg){
+            message('System','Time Left: '+msg);
+          });
+          setInterval(function() { 
+             socket2.emit('timeLeft');
+            },1000);
           })
       });
 
