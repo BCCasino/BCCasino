@@ -1,8 +1,13 @@
 require('./lib/bigsix.js');
+var sys = require('sys')
 require('./lib/account.js');
-require('./lib/room.js');
+var room = require('./lib/room.js');
 var bitcoin = require('bitcoin'); 
 var client = new bitcoin.Client('localhost', 8332, 'bitcoin', 'Qwerty123456'); 
+var r = new room();
+console.log("Room: "+sys.inspect(r));
+
+
 var bs = new BigSixWheel();
 var results = new Object();
 for(var x=0;x<500;x++){
@@ -15,7 +20,7 @@ for(var x=0;x<500;x++){
 console.log("BETS: "+bs.getBets().length);
 for(var word in results)
 	console.log("BET: "+word +" Count: "+results[word]);
-var sys = require('sys')
+
 client.listAccounts(function(err,ret)
 {
 	console.log("ListAccounts: "+sys.inspect(ret));
