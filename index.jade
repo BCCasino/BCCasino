@@ -7,7 +7,7 @@ html
     script
       // socket.io specific code
       var socket = io.connect();
-
+      var socket2;
       socket.on('connect', function () {
         $('#chat').addClass('connected');
         message('System','connected');
@@ -15,7 +15,7 @@ html
 
       socket.on('JoinRoom',function(msg){
         message('System','Join Room: '+msg);
-        var socket2 = io.connect(msg);
+        socket2 = io.connect(msg);
         socket2.on('connect', function() {
           message('System','Joined room: '+msg);
            socket2.on('spin',function(msg){
@@ -47,7 +47,8 @@ html
 
         $('#send-message').submit(function () {
           message('me', $('#message').val());
-          socket.emit('user message', $('#message').val());
+          var msg = $('#message').val().split(" ",1);
+          socket2.emit(msg[0],msg[1]);
           clear();
           $('#lines').get(0).scrollTop = 10000000;
           return false;
