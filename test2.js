@@ -1,3 +1,5 @@
+var https = require('https');
+var fs = require('fs');
 /**
  * Bootstrap app.
  */
@@ -16,8 +18,12 @@ var express = require('express')
 /**
  * App.
  */
+var privateKey = fs.readFileSync('../www.thebitcoinwheel.com.key').toString();
+var certificate = fs.readFileSync('../www.thebitcoinwheel.com.crt').toString();
+var ca = fs.readFileSync('../intermediate.crt').toString();
 
-var app = express.createServer();
+var app = express.createServer({key:privateKey,cert:certificate,ca:ca });
+
 
 /**
  * App configuration.
@@ -48,7 +54,7 @@ app.get('/', function (req, res) {
  * App listen.
  */
 
-app.listen(3000, function () {
+app.listen(443, function () {
   var addr = app.address();
   console.log('   app listening on http://' + addr.address + ':' + addr.port);
 });
@@ -57,10 +63,11 @@ app.listen(3000, function () {
  * Socket.IO server (single process only)
  */
 var Room = require('./lib/room.js');
-var io = sio.listen(app);
+var io = sio.listen(app,{key:privateKey,cert:certificate,ca:ca});
 var rooms = [];
 var rmchannel =0;
 io.sockets.on('connection', function (socket) {
+	console.log('Got a connection');
 	var fnd = null;
 	for(var r in rooms)
 	{

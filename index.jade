@@ -2,7 +2,7 @@ doctype 5
 html
   head
     link(href='/stylesheets/style.css', rel='stylesheet')
-    script(src='http://code.jquery.com/jquery-1.6.1.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js')
     script(src='/socket.io/socket.io.js')
     script
       // socket.io specific code
@@ -17,7 +17,7 @@ html
         message('System','Join Room: '+msg);
         socket2 = io.connect(msg);
         socket2.on('connect', function() {
-          socket2.emit('join',{/*secret*/});
+          socket2.emit('join',{});
           message('System','Joined room: '+msg);
            socket2.on('spin',function(msg){
              message('System','Spin: '+msg.spin+', salt: '+msg.salt);
