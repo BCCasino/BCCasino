@@ -27,6 +27,15 @@ html
            socket2.on('timeLeft',function(msg){
             message('System','Time Left: '+msg);
           });
+           socket2.on('DepositAddress',function(msg) {
+            message('System','Deposit Address: ' +msg);
+         });
+           socket2.on('Balance',function(msg) {
+            message('System','Balance: '+msg);
+          });
+           socket2.on('Secret',function(msg){
+            message('System','Secret: '+msg);
+          });
           setInterval(function() { 
              socket2.emit('timeLeft');
             },1000);
@@ -48,7 +57,9 @@ html
         $('#send-message').submit(function () {
           message('me', $('#message').val());
           var msg = $('#message').val().split(" ",1);
-          socket2.emit(msg[0],msg[1]);
+          var x = $('#message').val().indexOf(" ");
+          msg.push($('#message').val().substring(x));
+          socket2.emit(msg[0],$.parseJSON(msg[1]));
           clear();
           $('#lines').get(0).scrollTop = 10000000;
           return false;
