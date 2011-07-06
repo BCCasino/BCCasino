@@ -193,25 +193,36 @@ button {  width: auto; overflow: visible; }
 * html .clearfix { height: 1%; } /* Hides from IE-mac \*/
 .clearfix { display: block; }
 
-
-
-
-
  /* Primary Styles */
+body {
+	font-family: Arial;
+	
+}
+header {
+	font-family: 'Ubuntu', "Arial";
+	font-style: italic;
+	font-weight: bold;
+	font-size: 75px;
+	padding: 0 20px;
+	color: #4d4d4d;
+	letter-spacing: -2px;
+
+	text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);
+	background: #fefefe;
+	background: -moz-linear-gradient(top, #fefefe 0%, #dddedf 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fefefe), color-stop(100%,#dddedf));
+	background: -webkit-linear-gradient(top, #fefefe 0%,#dddedf 100%);
+	background: -o-linear-gradient(top, #fefefe 0%,#dddedf 100%);
+	background: -ms-linear-gradient(top, #fefefe 0%,#dddedf 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#dddedf',GradientType=0 );
+	background: linear-gradient(top, #fefefe 0%,#dddedf 100%);
+}
 #wheel {
 	-webkit-transition: all 10000ms ease-out;
-	-moz-transition: all 10s ease-out;
-	-o-transition: all 10s ease-out;
-	transition: all 10s ease-out;
+	-moz-transition: all 10000ms ease-out;
+	-o-transition: all 10000ms ease-out;
+	transition: all 10000ms ease-out;
 }
-
-
-
-
-
-
-
-
 
 
 /* 
@@ -259,9 +270,6 @@ button {  width: auto; overflow: visible; }
 /* Grade-A Mobile Browsers (Opera Mobile, iPhone Safari, Android Chrome)  
    Consider this: www.cloudfour.com/css-media-query-for-mobile-is-fools-gold/ */
 @media screen and (max-device-width: 480px) {
-  
-  
   /* Prevent iOS, WinMobile from adjusting font size */
   html { -webkit-text-size-adjust:none; -ms-text-size-adjust:none; } 
 }
-
