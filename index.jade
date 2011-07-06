@@ -17,6 +17,7 @@ html
         message('System','Join Room: '+msg);
         socket2 = io.connect(msg);
         socket2.on('connect', function() {
+          socket2.emit('join',{/*secret*/});
           message('System','Joined room: '+msg);
            socket2.on('spin',function(msg){
              message('System','Spin: '+msg.spin+', salt: '+msg.salt);
