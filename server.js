@@ -15,6 +15,12 @@ server.configure(function(){
   	server.use(express.static(__dirname + '/static'));
     server.use(server.router);
 });
+server.configure('development', function(){
+	server.use(express.errorHandler({ dumpExceptions: true, showStack: false }));
+});
+server.configure('production', function(){
+	server.use(express.errorHandler());
+});
 
 //setup the errors
 server.error(function(err, req, res, next){
