@@ -6,7 +6,7 @@ html
     script(src='/socket.io/socket.io.js')
     script
       // socket.io specific code
-      var socket = io.connect();
+      var socket = io.connect(null,{port: 443, secure: true, rememberTransport: false});
       var socket2;
       socket.on('connect', function () {
         $('#chat').addClass('connected');
@@ -15,7 +15,7 @@ html
 
       socket.on('JoinRoom',function(msg){
         message('System','Join Room: '+msg);
-        socket2 = io.connect(msg);
+        socket2 = io.connect(msg,{port: 443, secure: true, rememberTransport: false});
         socket2.on('connect', function() {
           socket2.emit('join',{});
           message('System','Joined room: '+msg);
