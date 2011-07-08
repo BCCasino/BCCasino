@@ -16,20 +16,17 @@ var Wheel = {
 	}
 };
 
-function message (from, msg) {
-	alert(from + ":\n" + msg);
-}
-
 $(document).ready(function() {
 	// socket.io specific code
 	var socket = io.connect(null,{rememberTransport: false});
 	var socket2;
 	socket.on('connect', function () {
-		message('System','connected');
+		//We're connected, but who gives a fuck we aint in a room yet
 	});
 
 	socket.on('JoinRoom',function(msg){
-		message('System','Join Room: '+msg);
+		//We're in a room mothafucka, let's display this on the page somewhere okay? fuck you.
+		
 		socket2 = io.connect(msg);
 		socket2.on('connect', function() {
 		 socket2.emit('join',{/*secret*/});

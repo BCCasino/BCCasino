@@ -68,14 +68,13 @@ server.get('*', function(req, res) {
 var io = sio.listen(server);
 var rooms = [];
 var rmchannel = 0;
-console.log("test");
 io.sockets.on('connection', function(socket) {
 	console.log('Got a connection');
 	var fnd = null;
 	for(var r in rooms)
 	{
 		var n = rooms[r].numberOfPlayers();		
-		if(n<5)
+		if(n < 5)
 		{
 			fnd = rooms[r];
 			console.log("Found a non-full room: "+fnd.getChannel());
