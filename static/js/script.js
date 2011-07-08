@@ -15,17 +15,34 @@ var Wheel = {
 		}, 10000);
 	}
 };
+var Loader = {
+	last: false,
+	show: function(overlay) {
+		this.hide();
+		
+		overlay = "#overlay-" + overlay;
+		$(overlay).fadeIn(250);
 
-$(document).ready(function() {
+		this.last = overlay;
+	},
+	hide: function() {
+		if (this.last)
+			$(this.last).fadeOut(250);
+		this.last = false;
+	}
+}
+
+$(function() {
+	Loader.show("loading");
 	// socket.io specific code
-	var socket = io.connect(null,{rememberTransport: false});
+	var socket = io.connect(null,{ rememberTransport: false });
 	var socket2;
 	socket.on('connect', function () {
-		//We're connected, but who gives a fuck we aint in a room yet
+		//not much to do here...
 	});
 
 	socket.on('JoinRoom',function(msg){
-		//We're in a room mothafucka, let's display this on the page somewhere okay? fuck you.
+		Loader.hide();
 		
 		socket2 = io.connect(msg);
 		socket2.on('connect', function() {

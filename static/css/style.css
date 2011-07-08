@@ -218,6 +218,31 @@ header {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#dddedf',GradientType=0 );
 	background: linear-gradient(top, #fefefe 0%,#dddedf 100%);
 }
+.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.8);
+	z-index: 1000;
+	text-align: center;
+	color: #FFF;
+	font-family: "Arial Black";
+	text-transform: uppercase;
+	letter-spacing: -2px;
+	display: none;
+}
+	.overlay > div {
+		position: absolute;
+		top: 50%;
+		width: 100%;
+	}
+	.overlay > div > div {
+		font-size: 70px;
+		bottom: 35px;
+		position: relative;
+	}
 #wheel {
 	-webkit-transition: all 10000ms ease-out;
 	-moz-transition: all 10000ms ease-out;
