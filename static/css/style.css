@@ -243,6 +243,9 @@ header {
 		bottom: 35px;
 		position: relative;
 	}
+#overlay-loading {
+	display: block;
+}
 #wheel {
 	-webkit-transition: all 10000ms ease-out;
 	-moz-transition: all 10000ms ease-out;

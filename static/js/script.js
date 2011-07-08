@@ -16,7 +16,7 @@ var Wheel = {
 	}
 };
 var Loader = {
-	last: false,
+	last: "#overlay-loading",
 	show: function(overlay) {
 		this.hide();
 		
@@ -33,7 +33,6 @@ var Loader = {
 }
 
 $(function() {
-	Loader.show("loading");
 	// socket.io specific code
 	var socket = io.connect(null,{ rememberTransport: false });
 	var socket2;
