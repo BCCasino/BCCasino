@@ -199,6 +199,9 @@ button {  width: auto; overflow: visible; }
 .left {
 	float: left;
 }
+.clear {
+	clear: both;
+}
 
  /* Primary Styles */
 body {
@@ -228,6 +231,7 @@ header {
 	padding: 5px 33px;
 	color: #FFF;
 	font-size: 13px;
+	border-bottom: 2px #DFDFDF solid;
 }
 	#informationBar ul {
 		margin: 0;
@@ -265,12 +269,13 @@ header {
 	display: block;
 }
 #main {
-	padding: 5px;
 }
 #wheelWrapper {
 	width: 600px;
 	text-align: center;
 	position: relative;
+	border-right: 2px #DFDFDF solid;
+	padding: 5px;
 }
 	#wheelWrapper #wheelArrow {
 		margin-bottom: -38px;
@@ -283,6 +288,13 @@ header {
 		-o-transition: all 10000ms ease-out;
 		transition: all 10000ms ease-out;
 	}
+	#wheelWrapper #wheelInformation {
+		text-align: left;
+	}
+#rightArea {
+	margin-left: 610px;
+	padding: 10px 15px;
+}
 
 
 /* 
