@@ -50,37 +50,52 @@ $(function() {
 
 		socket2 = io.connect(msg);
 		socket2.on('connect', function() {
-			socket2.emit('join',{/*secret*/});
-				message('System','Joined room: '+msg);
-				socket2.on('spin',function(msg){
-					Wheel.spinToSlice(msg.spin);
-					$("#spinToHash").html(msg.spin + msg.salt);
-					message('System','Spin: ' + msg.spin + ', salt: ' + msg.salt);
-				});
-				socket2.on('newHash',function(msg){
-					$("#spinHash").html(msg.hash);
-					message('System','Hash: '+ msg.hash);
-				});
-				socket2.on('timeLeft',function(msg){
-					$("#timeLeft").html(msg);
-					message('System','Time Left: '+msg);
-				});
-				socket2.on('DepositAddress',function(msg) {
-					message('System','Deposit Address: ' + msg);
-				});
-				socket2.on('Balance',function(msg) {
-					message('System','Balance: '+msg);
-				});
-				socket2.on('Secret',function(msg){
-					message('System','Secret: '+msg);
-				});
-				setInterval(function() { 
-					socket2.emit('timeLeft');
-				}, 1000);
-			})
-		});
+			var secret = window.location.hash;
+			message("debug", secret);
+			if (secret != "")
+				socket2.emit('join', {secret: secret});
+			else
+				socket2.emit('join', {});
+			socket2.emit('getDepositAddress');
+			socket2.emit('getBalance');
+			socket2.emit('getSecret');
+			
+			$("#room").html(parseInt(msg.replace("/", "")) + 1)
+			message('System','Joined room: ' + msg);
+			socket2.on('spin',function(msg) {
+				Wheel.spinToSlice(msg.spin);
+				$("#spinToHash").html(msg.spin + msg.salt);
+				message('System','Spin: ' + msg.spin + ', salt: ' + msg.salt);
+			});
+			socket2.on('newHash',function(msg) {
+				$("#spinHash").html(msg.hash);
+				$("#spinToHash").html("");
+				message('System', 'Hash: ' + msg.hash);
+			});
+			socket2.on('timeLeft',function(msg) {
+				var seconds = Math.round(parseInt(msg) / 1000);
+				$("#timeLeft").html(seconds + " seconds");
+				message('System', 'Time Left: ' + msg);
+			});
+			socket2.on('DepositAddress',function(msg) {
+				$("#depositAddress").html(msg);
+				message('System', 'Deposit Address: ' + msg);
+			});
+			socket2.on('Balance',function(msg) {
+				$("#balance").html(msg);
+				message('System', 'Balance: ' + msg);
+			});
+			socket2.on('Secret',function(msg) {
+				window.location.hash = msg;
+				message('System', 'Secret: '+ msg);
+			});
+			setInterval(function() { 
+				socket2.emit('timeLeft');
+			}, 1000);
+		})
+	});
 
-		socket.on('error', function (e) {
-			message('System', e ? e : 'A unknown error occurred');
-		});
+	socket.on('error', function (e) {
+		message('System', e ? e : 'A unknown error occurred');
+	});
 });
