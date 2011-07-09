@@ -23,11 +23,16 @@
 		</div>
 		<div id="container">
 			<header>
-				<div id="information" class="right">
-					
-				</div>
 				The Bitcoin Wheel
 			</header>
+			<div id="informationBar">
+				<ul>
+					<li class="right"><strong>Deposit Address:</strong>&nbsp;<span id="depositAddress"></span></li>
+					<li><strong>Time Left:</strong>&nbsp;<span id="timeLeft"></span></li>
+					<li><strong>sha256(spin + salt):</strong>&nbsp;<span id="spinHash"></span></li>
+					<li><strong>spin + salt:</strong>&nbsp;<span id="spinToHash"></span></li>
+				</ul>
+			</div>
 
 			<div id="main">
 				<%- body %>

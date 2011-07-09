@@ -32,6 +32,11 @@ var Loader = {
 	}
 }
 
+function message(t, v) {
+	if (console)
+		console.log(t + ": " + v);
+}
+
 $(function() {
 	// socket.io specific code
 	var socket = io.connect(null,{ rememberTransport: false });
@@ -42,36 +47,40 @@ $(function() {
 
 	socket.on('JoinRoom',function(msg){
 		Loader.hide();
-		
+
 		socket2 = io.connect(msg);
 		socket2.on('connect', function() {
-		 socket2.emit('join',{/*secret*/});
-		 message('System','Joined room: '+msg);
-		  socket2.on('spin',function(msg){
-		    message('System','Spin: '+msg.spin+', salt: '+msg.salt);
-		  });
-		  socket2.on('newHash',function(msg){
-		    message('System','Hash: '+ msg.hash);
-		 });
-		  socket2.on('timeLeft',function(msg){
-		   message('System','Time Left: '+msg);
-		 });
-		  socket2.on('DepositAddress',function(msg) {
-		   message('System','Deposit Address: ' +msg);
+			socket2.emit('join',{/*secret*/});
+				message('System','Joined room: '+msg);
+				socket2.on('spin',function(msg){
+					Wheel.spinToSlice(msg.spin);
+					$("#spinToHash").html(msg.spin + msg.salt);
+					message('System','Spin: ' + msg.spin + ', salt: ' + msg.salt);
+				});
+				socket2.on('newHash',function(msg){
+					$("#spinHash").html(msg.hash);
+					message('System','Hash: '+ msg.hash);
+				});
+				socket2.on('timeLeft',function(msg){
+					$("#timeLeft").html(msg);
+					message('System','Time Left: '+msg);
+				});
+				socket2.on('DepositAddress',function(msg) {
+					message('System','Deposit Address: ' + msg);
+				});
+				socket2.on('Balance',function(msg) {
+					message('System','Balance: '+msg);
+				});
+				socket2.on('Secret',function(msg){
+					message('System','Secret: '+msg);
+				});
+				setInterval(function() { 
+					socket2.emit('timeLeft');
+				}, 1000);
+			})
 		});
-		  socket2.on('Balance',function(msg) {
-		   message('System','Balance: '+msg);
-		 });
-		  socket2.on('Secret',function(msg){
-		   message('System','Secret: '+msg);
-		 });
-		 setInterval(function() { 
-		    socket2.emit('timeLeft');
-		   },1000);
-		 })
-	});
 
-	socket.on('error', function (e) {
-	  message('System', e ? e : 'A unknown error occurred');
-	});
+		socket.on('error', function (e) {
+			message('System', e ? e : 'A unknown error occurred');
+		});
 });
