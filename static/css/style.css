@@ -193,10 +193,16 @@ button {  width: auto; overflow: visible; }
 * html .clearfix { height: 1%; } /* Hides from IE-mac \*/
 .clearfix { display: block; }
 
+.right {
+	float: right;
+}
+.left {
+	float: left;
+}
+
  /* Primary Styles */
 body {
-	font-family: Arial;
-	
+	font-family: 'Ubuntu';
 }
 header {
 	font-family: 'Ubuntu', "Arial";
@@ -205,8 +211,7 @@ header {
 	font-size: 75px;
 	padding: 0 20px;
 	color: #4d4d4d;
-	letter-spacing: -2px;
-	border-bottom: 2px #c1c1c1 solid;
+	letter-spacing: -3px;
 
 	text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);
 	background: #fefefe;
@@ -215,9 +220,22 @@ header {
 	background: -webkit-linear-gradient(top, #fefefe 0%,#dddedf 100%);
 	background: -o-linear-gradient(top, #fefefe 0%,#dddedf 100%);
 	background: -ms-linear-gradient(top, #fefefe 0%,#dddedf 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#dddedf',GradientType=0 );
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefefe', endColorstr='#dddedf',GradientType=0 );
 	background: linear-gradient(top, #fefefe 0%,#dddedf 100%);
 }
+#informationBar {
+	background: #4D4D4D;
+	padding: 5px 33px;
+	color: #FFF;
+	font-size: 13px;
+}
+	#informationBar ul {
+		margin: 0;
+	}
+		#informationBar ul li {
+			display: inline-block;
+			margin-right: 5px;
+		}
 .overlay {
 	position: absolute;
 	top: 0;
@@ -240,18 +258,31 @@ header {
 	}
 	.overlay > div > div {
 		font-size: 70px;
-		bottom: 35px;
+		bottom: 45px;
 		position: relative;
 	}
 #overlay-loading {
 	display: block;
 }
-#wheel {
-	-webkit-transition: all 10000ms ease-out;
-	-moz-transition: all 10000ms ease-out;
-	-o-transition: all 10000ms ease-out;
-	transition: all 10000ms ease-out;
+#main {
+	padding: 5px;
 }
+#wheelWrapper {
+	width: 600px;
+	text-align: center;
+	position: relative;
+}
+	#wheelWrapper #wheelArrow {
+		margin-bottom: -38px;
+		position: relative;
+		z-index: 1;
+	}
+	#wheelWrapper #wheel {
+		-webkit-transition: all 10000ms ease-out;
+		-moz-transition: all 10000ms ease-out;
+		-o-transition: all 10000ms ease-out;
+		transition: all 10000ms ease-out;
+	}
 
 
 /* 
