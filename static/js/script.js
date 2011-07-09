@@ -50,9 +50,17 @@ $(function() {
 
 		socket2 = io.connect(msg);
 		socket2.on('connect', function() {
-			socket2.emit('join',{/*secret*/});
+			var secret = window.location.hash;
+			message("debug", secret);
+			if (secret != "")
+				socket2.emit('join', {secret: secret});
+			else
+				socket2.emit('join', {});
 			socket2.emit('getDepositAddress');
 			socket2.emit('getBalance');
+			socket2.emit('getSecret');
+			
+			$("#room").html(parseInt(msg.replace("/", "")) + 1)
 			message('System','Joined room: ' + msg);
 			socket2.on('spin',function(msg) {
 				Wheel.spinToSlice(msg.spin);
@@ -61,6 +69,7 @@ $(function() {
 			});
 			socket2.on('newHash',function(msg) {
 				$("#spinHash").html(msg.hash);
+				$("#spinToHash").html("");
 				message('System', 'Hash: ' + msg.hash);
 			});
 			socket2.on('timeLeft',function(msg) {
@@ -77,6 +86,7 @@ $(function() {
 				message('System', 'Balance: ' + msg);
 			});
 			socket2.on('Secret',function(msg) {
+				window.location.hash = msg;
 				message('System', 'Secret: '+ msg);
 			});
 			setInterval(function() { 
