@@ -71,6 +71,7 @@ $(function() {
 			else
 				socket2.emit('join', {});
 			socket2.emit('getDepositAddress');
+			socket2.emit('getWithdrawableBalance');
 			socket2.emit('getBalance');
 			socket2.emit('getSecret');
 			
@@ -95,6 +96,10 @@ $(function() {
 				message('System', 'Deposit Address: ' + msg);
 			});
 			socket2.on('Balance',function(msg) {
+				$("#ucbalance").html(msg);
+				message('System', 'Unconfirmed Balance: ' + msg);
+			});
+			socket2.on('WithdrawableBalance', function(msg) {
 				$("#balance").html(msg);
 				message('System', 'Balance: ' + msg);
 			});
