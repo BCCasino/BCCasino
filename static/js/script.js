@@ -119,7 +119,7 @@ $(function() {
 				$("#spinHash").html(msg.hash);
 				$("#spinToHash").html("");
 				updateMax();
-				getBets();
+				updateBets();
 				$("#btnReady").removeClass("button-red").addClass("button-green").attr("disabled", "").val("Ready");
 				message('System', 'Hash: ' + msg.hash);
 			});
