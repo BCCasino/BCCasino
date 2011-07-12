@@ -45,6 +45,17 @@ function message(type, msg) {
 	if (console)
 		console.log(type + ": " + msg);
 }
+function displayBets(bets) {
+	$("#bettingArea tbody tr:not(:last-child)").remove();
+	console.log(bets);
+}
+function updateBalances() {
+	socket2.emit('getWithdrawableBalance');
+	socket2.emit('getBalance');
+}
+function updateMax() {
+	socket2.emit("getmaxbet");
+}
 var socket, socket2;
 $(function() {
 	$("#txtChat").keypress(function(e) {
@@ -52,6 +63,12 @@ $(function() {
 			socket2.emit('chatmessage', { message: $(this).val() });
 			$(this).val("");
 		}
+	});
+	$("#btnAddBet").click(function() {
+		socket2.emit("bet", {
+			bet: $("#ddBetZone").val(),
+			amount: $("#txtBetAmount").val()
+		});
 	});
 	
 	// socket.io specific code
@@ -70,13 +87,13 @@ $(function() {
 				socket2.emit('join', {secret: secret});
 			else
 				socket2.emit('join', {});
+			
 			socket2.emit('getDepositAddress');
-			socket2.emit('getWithdrawableBalance');
-			socket2.emit('getBalance');
 			socket2.emit('getSecret');
 			
 			$("#room").html(parseInt(msg.replace("/", "")) + 1)
 			message('System','Joined room: ' + msg);
+			
 			socket2.on('spin',function(msg) {
 				Wheel.spinToSlice(msg.spin);
 				$("#spinToHash").html(msg.spin + msg.salt);
@@ -85,6 +102,7 @@ $(function() {
 			socket2.on('newHash',function(msg) {
 				$("#spinHash").html(msg.hash);
 				$("#spinToHash").html("");
+				updateMax();
 				message('System', 'Hash: ' + msg.hash);
 			});
 			socket2.on('timeLeft',function(msg) {
@@ -110,13 +128,43 @@ $(function() {
 			socket2.on("chatmessage", function(msg) {
 				message('Chat', msg.message);
 			});
+			socket2.on("resumeBets", function(msg) {
+				$("#bet-new-wrap .bet-zone, #bet-new-wrap .bet-amount, #bet-new-wrap #btnAddBet").removeAttr("disabled");
+				updateBalances();
+			});
+			socket2.on("noMoreBets", function(msg) {
+				$("#bet-new-wrap .bet-zone, #bet-new-wrap .bet-amount, #bet-new-wrap #btnAddBet").attr("disabled", true);
+				updateBalances();
+			});
+			socket2.on("bets", function(msg) {
+				displayBets(msg);
+			});
+			socket2.on("bet", function(msg) {
+				if (msg.ok)
+					message("System", "Bet placed successfully.");
+				else
+					message("System", "Something went wrong while placing your bet.");
+				
+				displayBets(msg.bets);
+			});
+			socket2.on("removeBet", function(msg) {
+				if (msg.ok)
+					message("System", "Bet removed successfully.");
+				else
+					message("System", "Something went wrong while removing your bet.");
+				
+				displayBets(msg.bets);
+			});
 			setInterval(function() { 
 				socket2.emit('timeLeft');
 			}, 1000);
+			setInterval(function() {
+				updateBalances();
+			}, 20000);
 		})
 	});
 
 	socket.on('error', function (e) {
-		message('System', e ? e : 'A unknown error occurred');
+		message('System', e ? e : 'An unknown error occurred');
 	});
 });

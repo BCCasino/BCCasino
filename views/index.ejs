@@ -11,16 +11,41 @@
 	<div class="area">
 		<h2>Betting</h2>
 		<div id="bettingArea" class="area-content">
-			<select class="bet-zone">
-				<option value="-1">Select a zone</option>
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="5">5</option>
-				<option value="10">10</option>
-				<option value="20">20</option>
-				<option value="joker">Joker (40)</option>
-				<option value="flag">Flag (40)</option>
-			</select>
+			<table cellpadding="0" cellspacing="0">
+				<thead>
+					<tr>
+						<th>
+							Zone
+						</th>
+						<th>Amount</th>
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr id="bet-new-wrap">
+						<td>
+							<select id="ddBetZone" class="bet-zone">
+								<option value="-1">Select a zone</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="5">5</option>
+								<option value="10">10</option>
+								<option value="20">20</option>
+								<option value="joker">Joker (40)</option>
+								<option value="flag">Flag (40)</option>
+							</select>
+						</td>
+						<td>
+							<input type="text" id="txtBetAmount" class="bet-amount" value="0.00" />	
+						</td>
+						<td>
+							<input type="button" id="btnAddBet" value="Add" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<br />
+			<input type="button" id="btnReady" value="Ready" />
 		</div>
 	</div>
 	<div class="area">

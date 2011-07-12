@@ -297,10 +297,20 @@ header {
 #bettingArea {
 	padding: 5px;
 }
-#bettingArea select {
-	border: 1px #4D4D4D solid;
-	padding: 2px;
-}
+	#bettingArea select,
+	#bettingArea input[type='text'] {
+		border: 1px #4D4D4D solid;
+		padding: 2px;
+		border-radius: none;
+	}
+	#bettingArea .bet-new {
+		height: 21px;
+		width: 21px;
+		display: inline-block;
+		background: url(../images/icon_plus.png) center center no-repeat;
+		vertical-align: middle;
+		cursor: pointer;
+	}
 .area {
 	border: 1px #4D4D4D solid;
 	margin-bottom: 15px;
