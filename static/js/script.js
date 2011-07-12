@@ -153,7 +153,7 @@ $(function() {
 				updateBalances();
 			});
 			socket2.on("bets", function(msg) {
-				displayBets(msg);
+				displayBets(msg[0]);
 			});
 			socket2.on("bet", function(msg) {
 				if (msg.ok)
