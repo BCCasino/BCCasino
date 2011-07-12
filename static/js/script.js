@@ -48,7 +48,7 @@ function message(type, msg) {
 function displayBets(bets) {
 	$("#bettingArea tbody tr:not(:last-child)").remove();
 	for (var bet in bets) {
-		var html = "<tr><td>" + bet[0] + "</td><td>" + bet[1] + "</td><td><input type='button' value='X' /></tr>";
+		var html = "<tr><td>" + bet[0] + "</td><td>" + bet[1] + "</td><td><input type='button' value='X' class='bet-remove' /></tr>";
 		$("#bettingArea tbody tr:last-child").before(html);
 	}
 	console.log(bets);
@@ -60,6 +60,9 @@ function updateBalances() {
 function updateMax() {
 	socket2.emit("getmaxbet");
 }
+function updateBets() {
+	socket2.emit("getBets");
+}
 var socket, socket2;
 $(function() {
 	$("#txtChat").keypress(function(e) {
@@ -68,13 +71,22 @@ $(function() {
 			$(this).val("");
 		}
 	});
+	$("#btnReady").click(function() {
+		socket2.emit("ready");
+		$(this).removeClass("button-green").addClass("button-red").attr("disabled", "disabled").val("Readied!");
+	});
 	$("#btnAddBet").click(function() {
+		var amt = $("#txtBetAmount").val();
 		socket2.emit("bet", {
 			bet: $("#ddBetZone").val(),
 			amount: $("#txtBetAmount").val()
 		});
 	});
-	
+	$(".bet-remove").click(function() {
+		var betZone = $($(this).parent().find("td")[0]).html();
+		var betAmt = $($(this).parent().find("td")[1]).html();
+		socket2.emit("removeBet", { bet: betZone, amount: betAmt });
+	});
 	// socket.io specific code
 	socket = io.connect(null, { rememberTransport: false });
 	socket.on('connect', function () {
@@ -107,6 +119,8 @@ $(function() {
 				$("#spinHash").html(msg.hash);
 				$("#spinToHash").html("");
 				updateMax();
+				getBets();
+				$("#btnReady").removeClass("button-red").addClass("button-green").attr("disabled", "").val("Ready");
 				message('System', 'Hash: ' + msg.hash);
 			});
 			socket2.on('timeLeft',function(msg) {
@@ -144,22 +158,21 @@ $(function() {
 			socket2.on("bet", function(msg) {
 				if (msg.ok)
 					message("System", "Bet placed successfully.");
-				else
-					message("System", "Something went wrong while placing your bet.");
 				
 				displayBets(msg.bets);
 			});
 			socket2.on("removeBet", function(msg) {
 				if (msg.ok)
 					message("System", "Bet removed successfully.");
-				else
-					message("System", "Something went wrong while removing your bet.");
 				
 				displayBets(msg.bets);
 			});
 			socket2.on("maxbet", function(msg) {
 				message("System", "Max bet is " + msg + " BTC");
 			})
+			socket2.on("exception", function(msg) {
+				message("Error", msg);
+			});
 			setInterval(function() { 
 				socket2.emit('timeLeft');
 			}, 1000);
