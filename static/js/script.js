@@ -48,7 +48,7 @@ function message(type, msg) {
 function displayBets(bets) {
 	$("#bettingArea tbody tr:not(:last-child)").remove();
 	for (var bet in bets) {
-		var html = "<tr><td>" + bet[0] + "</td><td>" + bet[1] + "</td></tr>";
+		var html = "<tr><td>" + bet[0] + "</td><td>" + bet[1] + "</td><td><input type='button' value='X' /></tr>";
 		$("#bettingArea tbody tr:last-child").before(html);
 	}
 	console.log(bets);
