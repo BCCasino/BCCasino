@@ -82,7 +82,7 @@ $(function() {
 
 		socket2 = io.connect(msg);
 		socket2.on('connect', function() {
-			var secret = window.location.hash;
+			var secret = window.location.hash.replace("#", "");
 			if (secret != "")
 				socket2.emit('join', {secret: secret});
 			else
