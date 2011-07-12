@@ -47,6 +47,10 @@ function message(type, msg) {
 }
 function displayBets(bets) {
 	$("#bettingArea tbody tr:not(:last-child)").remove();
+	for (var bet in bets) {
+		var html = "<tr><td>" + bet[0] + "</td><td>" + bet[1] + "</td><td><input type='button' value='X' /></tr>";
+		$("#bettingArea tbody tr:last-child").before(html);
+	}
 	console.log(bets);
 }
 function updateBalances() {
@@ -115,11 +119,9 @@ $(function() {
 			});
 			socket2.on('Balance',function(msg) {
 				$("#ucbalance").html(msg);
-				message('System', 'Unconfirmed Balance: ' + msg);
 			});
 			socket2.on('WithdrawableBalance', function(msg) {
 				$("#balance").html(msg);
-				message('System', 'Balance: ' + msg);
 			});
 			socket2.on('Secret',function(msg) {
 				window.location.hash = msg;
@@ -155,6 +157,9 @@ $(function() {
 				
 				displayBets(msg.bets);
 			});
+			socket2.on("maxbet", function(msg) {
+				message("System", "Max bet is " + msg + " BTC");
+			})
 			setInterval(function() { 
 				socket2.emit('timeLeft');
 			}, 1000);
