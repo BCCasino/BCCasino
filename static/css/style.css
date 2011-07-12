@@ -99,7 +99,7 @@ body, select, input, textarea { color: #444; }
    you'll want to define those yourself. */ 
  
 /* www.aestheticallyloyal.com/public/optimize-legibility/ */ 
-h1,h2,h3,h4,h5,h6 { font-weight: bold; text-rendering: optimizeLegibility; }
+h1,h2,h3,h4,h5,h6 { font-style: italic; font-weight: bold; text-rendering: optimizeLegibility; }
 
 html { 
   /* maxvoltar.com/archive/-webkit-font-smoothing */ 
@@ -274,11 +274,10 @@ header {
 	width: 600px;
 	text-align: center;
 	position: relative;
-	border-right: 2px #DFDFDF solid;
 	padding: 5px;
 }
 	#wheelWrapper #wheelArrow {
-		margin-bottom: -38px;
+		margin-bottom: -40px;
 		position: relative;
 		z-index: 1;
 	}
@@ -295,8 +294,102 @@ header {
 	margin-left: 610px;
 	padding: 10px 15px;
 }
+#bettingArea {
+	padding: 5px;
+}
+	#bettingArea select,
+	#bettingArea input[type='text'] {
+		border: 1px #4D4D4D solid;
+		padding: 2px;
+		border-radius: none;
+	}
+	#bettingArea .bet-new {
+		height: 21px;
+		width: 21px;
+		display: inline-block;
+		background: url(../images/icon_plus.png) center center no-repeat;
+		vertical-align: middle;
+		cursor: pointer;
+	}
+.area {
+	border: 1px #4D4D4D solid;
+	margin-bottom: 15px;
+}
+	.area,
+	.area h2 {
+		-moz-border-radius-topleft: 3px;
+		-moz-border-radius-topright: 3px;
+		-moz-border-radius-bottomright: 0px;
+		-moz-border-radius-bottomleft: 0px;
+		-webkit-border-radius: 3px 3px 0px 0px;
+		border-radius: 3px 3px 0px 0px;
+	}
+	.area h2 {
+		color: #4d4d4d;
+		padding: 5px;
+		font-size: 18px;
+		border-bottom: 1px #4D4D4D solid;
+		
+		text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);
+		background: #fefefe;
+		background: -moz-linear-gradient(top, #fefefe 0%, #dddedf 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fefefe), color-stop(100%,#dddedf));
+		background: -webkit-linear-gradient(top, #fefefe 0%,#dddedf 100%);
+		background: -o-linear-gradient(top, #fefefe 0%,#dddedf 100%);
+		background: -ms-linear-gradient(top, #fefefe 0%,#dddedf 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fefefe', endColorstr='#dddedf',GradientType=0 );
+		background: linear-gradient(top, #fefefe 0%,#dddedf 100%);
+	}
+	.area .areaContent {
+		padding: 3px 5px;
+	}
 
-
+#chat {
+	padding: 0;
+	font-size: 13px;
+}
+	#chatMessages {
+		height: 150px;
+		overflow-y: auto;
+	}
+	#chatMessages .chatMessage {
+		background: #F7FBFF;
+	}
+	#chatMessages .chatMessage:nth-child(even) {
+		background: #FFF;
+	}
+		#chatMessages .chatMessage {
+			padding: 2px 5px;
+		}
+			#chatMessages .chatMessage span {
+				vertical-align: top;
+				padding-right: 5px;
+				display: inline-block;
+			}
+			#chatMessages .chatMessage .messageType,
+			#chatMessages .chatMessage .messageTime {
+				font-size: 11px;
+				margin-top: 1px;
+			}
+			#chatMessages .chatMessage .messageType {
+				font-weight: bold;
+				text-transform: uppercase;
+				letter-spacing: -1px;
+				width: 37px;
+			}
+			#chatMessages .chatMessage .messageTime {
+				width: 44px;
+			}
+	#chatInput {
+		padding: 2px 5px;
+		border-top: 1px #4D4D4D solid;
+	}
+		#chatInput #txtChat {
+			width: 100%;
+			border: 0;
+			padding: 0;
+			outline: none;
+		}
 /* 
  * print styles
  * inlined to avoid required HTTP connection www.phpied.com/delay-loading-your-print-css/ 
