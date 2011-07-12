@@ -82,7 +82,7 @@ $(function() {
 			amount: $("#txtBetAmount").val()
 		});
 	});
-	$(".bet-remove").click(function() {
+	$(".bet-remove").live("click", function() {
 		var betZone = $($(this).parent().find("td")[0]).html();
 		var betAmt = $($(this).parent().find("td")[1]).html();
 		socket2.emit("removeBet", { bet: betZone, amount: betAmt });
