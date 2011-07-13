@@ -162,7 +162,7 @@ $(function() {
 				$("#ucbalance").html(msg);
 			});
 			socket2.on('WithdrawableBalance', function(msg) {
-				var amt = parseFloat(amt);
+				var amt = parseFloat(msg);
 				if (amt && amt >= 0.01)
 					$("#btnWithdraw").show();
 				
