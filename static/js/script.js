@@ -114,7 +114,7 @@ $(function() {
 		}
 	});
 	// socket.io specific code
-	socket = io.connect(null, { secure: true, port: 443, rememberTransport: false });
+	socket = io.connect(null, { secure: true, port: 443, rememberTransport: false, 'reopen delay': 1000 });
 	socket.on('connect', function () {
 		//not much to do here...
 	});
