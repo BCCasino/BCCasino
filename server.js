@@ -28,7 +28,6 @@ var server = express.createServer({key:privateKey,cert:certificate,ca:ca });
 //var server = express.createServer();
 
 //Setup Express
-var server = express.createServer();
 server.configure(function(){
     server.set('views', __dirname + '/views');
   	server.use(express.static(__dirname + '/static'));
