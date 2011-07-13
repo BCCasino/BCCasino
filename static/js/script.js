@@ -112,7 +112,8 @@ $(function() {
 				address: addr
 			});
 		}
-	});
+	}).hide();
+	
 	// socket.io specific code
 	socket = io.connect(null, { secure: true, port: 443, rememberTransport: false, 'reopen delay': 1000 });
 	socket.on('connect', function () {
@@ -162,6 +163,10 @@ $(function() {
 				$("#ucbalance").html(msg);
 			});
 			socket2.on('WithdrawableBalance', function(msg) {
+				var amt = parseFloat(amt);
+				if (amt && amt >= 0.01)
+					$("#btnWithdraw").show();
+				
 				$("#balance").html(msg);
 			});
 			socket2.on('Secret',function(msg) {
