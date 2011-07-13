@@ -82,7 +82,7 @@ $(function() {
 			message("Error", "Invalid bet amount.");
 			return;
 		}
-		var zone = $("#txtBetZone").val();
+		var zone = $("#ddBetZone").val();
 		if (zone == -1) {
 			message("Error", "Invalid bet zone.");
 			return;
