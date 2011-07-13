@@ -101,7 +101,7 @@ $(function() {
 	$("#btnWithdraw").click(function() {
 		var max = parseFloat($("#balance").html());
 		var amt = parseFloat(prompt("How much do you want to withdraw? You can currently withdraw up to " + max + " BTC.", "0.00"));
-		if (amt == NaN || amt < 0 || amt > max) {
+		if (amt == NaN || amt <= 0 || amt > max) {
 			message("Error", "Invalid withdraw amount.");
 			return;
 		}
