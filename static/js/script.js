@@ -72,6 +72,7 @@ $(function() {
 	$("#btnReady").click(function() {
 		socket2.emit("ready");
 		$(this).removeClass("button-green").addClass("button-red").attr("disabled", "disabled").val("Readied!");
+		$("#bet-new-wrap .bet-zone, #bet-new-wrap .bet-amount, #bet-new-wrap #btnAddBet").attr("disabled", true);
 	});
 	$("#btnAddBet").click(function() {
 		var amt = parseFloat($("#txtBetAmount").val());
@@ -138,6 +139,7 @@ $(function() {
 			socket2.on('spin',function(msg) {
 				Wheel.spinToSlice(msg.spin);
 				$("#spinToHash").html(msg.spin + msg.salt);
+				$("#btnReady").removeClass("button-green").addClass("button-red").attr("disabled", "disabled").val("Readied!");
 				message('System','Spin: ' + msg.spin + ', Salt: ' + msg.salt);
 			});
 			socket2.on('newHash',function(msg) {
