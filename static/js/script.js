@@ -49,7 +49,7 @@ function displayBets(bets) {
 	$("#bettingArea tbody tr:not(:last-child)").remove();
 	for (var bet in bets) {
 		bet = bets[bet];
-		var html = "<tr><td>" + bet[0] + "</td><td>" + bet[1] + "</td><td><input type='button' value='X' class='bet-remove' /></tr>";
+		var html = "<tr><td>" + bet[0] + "</td><td>" + bet[1] + "</td><td><input type='button' value='X' class='bet-remove button-small button-border button-red' /></tr>";
 		$("#bettingArea tbody tr:last-child").before(html);
 	}
 	console.log(bets);
