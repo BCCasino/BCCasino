@@ -114,7 +114,7 @@ $(function() {
 		}
 	});
 	// socket.io specific code
-	socket = io.connect(null, { secure: true, port: 443, rememberTransport: false, 'reopen delay': 1000, transports: ['websocket'] });
+	socket = io.connect(null, { secure: true, port: 443, rememberTransport: false, 'reopen delay': 1000 });
 	socket.on('connect', function () {
 		//not much to do here...
 	});
@@ -122,7 +122,7 @@ $(function() {
 	socket.on('JoinRoom',function(msg){
 		Loader.hide();
 
-		socket2 = io.connect(msg, {secure: true, port: 443, rememberTransport: false, 'reopen delay': 1000, transports: ['websocket'] });
+		socket2 = io.connect(msg, {secure: true, port: 443, rememberTransport: false, 'reopen delay': 1000 });
 		socket2.on('connect', function() {
 			var secret = window.location.hash.replace("#", "");
 			if (secret != "")
