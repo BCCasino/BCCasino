@@ -42,8 +42,6 @@ function message(type, msg) {
 		$("#chatMessages .chatMessage:first-child").remove();
 	}
 	$("#chatMessages").scrollTo($("#chatMessages .chatMessage:last-child"), 100);
-	if (console)
-		console.log(type + ": " + msg);
 }
 function displayBets(bets) {
 	$("#bettingArea tbody tr:not(:last-child)").remove();
