@@ -15,7 +15,7 @@ var express = require('express')
 	connect = require('connect'),
 	Room = require("./lib/room.js");
 	
-var port = 80;
+var port = 443;
 
 /**
  * App.
