@@ -48,6 +48,7 @@ function message(type, msg) {
 function displayBets(bets) {
 	$("#bettingArea tbody tr:not(:last-child)").remove();
 	for (var bet in bets) {
+		bet = bets[bet];
 		var html = "<tr><td>" + bet[0] + "</td><td>" + bet[1] + "</td><td><input type='button' value='X' class='bet-remove' /></tr>";
 		$("#bettingArea tbody tr:last-child").before(html);
 	}
@@ -63,7 +64,7 @@ function updateMax() {
 function updateBets() {
 	socket2.emit("getBets");
 }
-var socket, socket2;
+var socket, socket2, maxbet;
 $(function() {
 	$("#txtChat").keypress(function(e) {
 		if (e.keyCode == 13) {
@@ -76,13 +77,18 @@ $(function() {
 		$(this).removeClass("button-green").addClass("button-red").attr("disabled", "disabled").val("Readied!");
 	});
 	$("#btnAddBet").click(function() {
-		var amt = $("#txtBetAmount").val();
+		var amt = parseFloat($("#txtBetAmount").val());
+		if (amt == NaN || amt < 0 || amt > maxbet) {
+			message("Error", "Invalid bet amount.");
+			return;
+		}
 		socket2.emit("bet", {
 			bet: $("#ddBetZone").val(),
 			amount: $("#txtBetAmount").val()
 		});
 	});
 	$(".bet-remove").live("click", function() {
+		alert('test');
 		var betZone = $($(this).parent().find("td")[0]).html();
 		var betAmt = $($(this).parent().find("td")[1]).html();
 		socket2.emit("removeBet", { bet: betZone, amount: betAmt });
@@ -168,6 +174,8 @@ $(function() {
 				displayBets(msg.bets);
 			});
 			socket2.on("maxbet", function(msg) {
+				maxbet = parseFloat(msg);
+				
 				message("System", "Max bet is " + msg + " BTC");
 			})
 			socket2.on("exception", function(msg) {
