@@ -15,17 +15,17 @@ var express = require('express')
 	connect = require('connect'),
 	Room = require("./lib/room.js");
 	
-var port = 8081;
+var port = 80;
 
 /**
  * App.
  */
-//var privateKey = fs.readFileSync('../www.thebitcoinwheel.com.key').toString();
-//var certificate = fs.readFileSync('../www.thebitcoinwheel.com.crt').toString();
-//var ca = fs.readFileSync('../intermediate.crt').toString();
+var privateKey = fs.readFileSync('../www.thebitcoinwheel.com.key').toString();
+var certificate = fs.readFileSync('../www.thebitcoinwheel.com.crt').toString();
+var ca = fs.readFileSync('../intermediate.crt').toString();
 
-//var server = express.createServer({key:privateKey,cert:certificate,ca:ca });
-var server = express.createServer();
+var server = express.createServer({key:privateKey,cert:certificate,ca:ca });
+//var server = express.createServer();
 
 //Setup Express
 var server = express.createServer();
@@ -59,13 +59,13 @@ server.get('*', function(req, res) {
 
 //SOCKET IO
 //Setup Socket.IO
-/*var io = sio.listen(server,{
+var io = sio.listen(server,{
 	key: privateKey,
 	cert: certificate,
 	ca: ca,
 	secure: true
-});*/
-var io = sio.listen(server);
+});
+//var io = sio.listen(server);
 var rooms = [];
 var rmchannel = 0;
 io.sockets.on('connection', function(socket) {
