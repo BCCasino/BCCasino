@@ -9,7 +9,7 @@ var Wheel = {
 		this.currentDeg = targetDeg;
 		this.currentSlice = slice;
 		
-		$("#wheel").css("-webkit-transform", "scale(1) rotate(" + targetDeg + "deg) translate(0px, 0px) skew(0deg, 0deg)");
+		$("#wheel").css("-webkit-transform", "scale(1) rotate(" + targetDeg + "deg) translate(0px, 0px) skew(0deg, 0deg)").css("-moz-transform", "scale(1) rotate(" + targetDeg + "deg) translate(0px, 0px) skew(0deg, 0deg)").css("-o-transform", "scale(1) rotate(" + targetDeg + "deg) translate(0px, 0px) skew(0deg, 0deg)").css("-ms-transform", "scale(1) rotate(" + targetDeg + "deg) translate(0px, 0px) skew(0deg, 0deg)").css("transform", "scale(1) rotate(" + targetDeg + "deg) translate(0px, 0px) skew(0deg, 0deg)");
 		setTimeout(function() {
 			if (callback != null)
 				callback();
@@ -201,6 +201,15 @@ $(function() {
 			})
 			socket2.on("exception", function(msg) {
 				message("Error", msg);
+			});
+			socket2.on("win", function(msg) {
+				message("System", "You just won a bet on " + msg.bet + " for " + msg.amount + " BTC, congratulations!");
+			});
+			socket2.on("loose", function(msg) {
+				message("System", "You just lost a bet on " + msg.bet + " for " + msg.amount + " BTC, sorry :(.");
+			});
+			socket2.on("withdraw", function(msg) {
+				message("System", "Withdrew funds successfully.");
 			});
 			setInterval(function() { 
 				socket2.emit('timeLeft');
