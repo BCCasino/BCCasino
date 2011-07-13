@@ -411,6 +411,9 @@ header {
 			display: inline-block;
 			margin-right: 5px;
 		}
+#btnWithdraw {
+	margin-top: -2px;
+}
 .overlay {
 	position: absolute;
 	top: 0;

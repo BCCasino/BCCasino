@@ -98,6 +98,21 @@ $(function() {
 		var betAmt = $(tds[1]).html();
 		socket2.emit("removeBet", { bet: betZone, amount: betAmt });
 	});
+	$("#btnWithdraw").click(function() {
+		var max = parseFloat($("#balance").html(msg));
+		var amt = parseFloat(prompt("How much do you want to withdraw? You can currently withdraw up to " + max + " BTC.", "0.00"));
+		if (amt == NaN || amt < 0 || amt > max) {
+			message("Error", "Invalid withdraw amount.");
+			return;
+		}
+		var addr = prompt("Please enter the address you want to withdraw to.", "");
+		if (confirm("Are you sure you want to withdraw " + amt + " BTC to the address '" + addr + "'?")) {
+			socket2.emit("withdraw", {
+				amount: amt,
+				address: addr
+			});
+		}
+	});
 	// socket.io specific code
 	socket = io.connect(null, { rememberTransport: false });
 	socket.on('connect', function () {
@@ -117,6 +132,7 @@ $(function() {
 			
 			socket2.emit('getDepositAddress');
 			socket2.emit('getSecret');
+			updateBalances();
 			
 			$("#room").html(parseInt(msg.replace("/", "")) + 1)
 			message('System','Joined room: ' + msg);
