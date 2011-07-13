@@ -50,7 +50,6 @@ function displayBets(bets) {
 		var html = "<tr><td>" + bet[0] + "</td><td>" + bet[1] + "</td><td><input type='button' value='X' class='bet-remove button-small button-border button-red' /></tr>";
 		$("#bettingArea tbody tr:last-child").before(html);
 	}
-	console.log(bets);
 }
 function updateBalances() {
 	socket2.emit('getWithdrawableBalance');
