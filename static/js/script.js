@@ -82,15 +82,20 @@ $(function() {
 			message("Error", "Invalid bet amount.");
 			return;
 		}
+		var zone = $("#txtBetZone").val();
+		if (zone == -1) {
+			message("Error", "Invalid bet zone.");
+			return;
+		}
 		socket2.emit("bet", {
-			bet: $("#ddBetZone").val(),
-			amount: $("#txtBetAmount").val()
+			bet: zone,
+			amount: amt
 		});
 	});
 	$(".bet-remove").live("click", function() {
-		alert('test');
-		var betZone = $($(this).parent().find("td")[0]).html();
-		var betAmt = $($(this).parent().find("td")[1]).html();
+		var tds = $(this).parents("tr").find("td");
+		var betZone = $(tds[0]).html();
+		var betAmt = $(tds[1]).html();
 		socket2.emit("removeBet", { bet: betZone, amount: betAmt });
 	});
 	// socket.io specific code
