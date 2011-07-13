@@ -164,6 +164,9 @@ $(function() {
 				if (amt && amt >= 0.01)
 					$("#btnWithdraw").show();
 				
+				if (amt && amt < 0)
+					msg = "0";
+				
 				$("#balance").html(msg);
 			});
 			socket2.on('Secret',function(msg) {
