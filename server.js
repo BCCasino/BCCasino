@@ -54,7 +54,23 @@ server.get('*', function(req, res) {
 		}
 	});
 });
-
+function login(secret)
+{
+console.log("Account logged in: "+secret);
+if(Accounts.indexOf(secret)!=-1)
+	return false;
+	Accounts.push(secret);
+	return true;
+}
+function logout(secret)
+{
+console.log("Account logged out: "+secret);
+try{
+	Accounts.splice(Accounts.indexOf(secret),1);
+	}catch(err){
+	Console.log("FAILED TO REMOVE ACCOUNT...");
+	}
+}
 
 //SOCKET IO
 //Setup Socket.IO
@@ -66,6 +82,7 @@ var io = sio.listen(server,{
 });
 //var io = sio.listen(server);
 var rooms = [];
+var Accounts = [];
 var rmchannel = 0;
 io.sockets.on('connection', function(socket) {
 	console.log('Got a connection');
@@ -86,7 +103,7 @@ io.sockets.on('connection', function(socket) {
 	}
 	else
 	{
-		fnd = new Room(io, '/' + rmchannel++);
+		fnd = new Room(io, '/' + rmchannel++,login,logout);
 		console.log("Room created: " + fnd.getChannel());
 		socket.emit("JoinRoom", fnd.getChannel());
 		rooms.push(fnd);
