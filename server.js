@@ -66,7 +66,7 @@ function logout(secret)
 {
 console.log("Account logged out: "+secret);
 try{
-	Accounts.splice(Accounts.indexOf(secret),1);
+	Accounts.splice(Accounts.indexOf(secret),1); 
 	}catch(err){
 	Console.log("FAILED TO REMOVE ACCOUNT...");
 	}
