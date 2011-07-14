@@ -9,7 +9,7 @@ var Wheel = {
 		this.currentDeg = targetDeg;
 		this.currentSlice = slice;
 		
-		$("#wheel").css("-webkit-transform", "scale(1) rotate(" + targetDeg + "deg) translate(0px, 0px) skew(0deg, 0deg)");
+		$("#wheel").css("-webkit-transform", "scale(1) rotate(" + targetDeg + "deg) translate(0px, 0px) skew(0deg, 0deg)").css("-moz-transform", "scale(1) rotate(" + targetDeg + "deg) translate(0px, 0px) skew(0deg, 0deg)").css("-o-transform", "scale(1) rotate(" + targetDeg + "deg) translate(0px, 0px) skew(0deg, 0deg)").css("-ms-transform", "scale(1) rotate(" + targetDeg + "deg) translate(0px, 0px) skew(0deg, 0deg)").css("transform", "scale(1) rotate(" + targetDeg + "deg) translate(0px, 0px) skew(0deg, 0deg)");
 		setTimeout(function() {
 			if (callback != null)
 				callback();
@@ -42,8 +42,6 @@ function message(type, msg) {
 		$("#chatMessages .chatMessage:first-child").remove();
 	}
 	$("#chatMessages").scrollTo($("#chatMessages .chatMessage:last-child"), 100);
-	if (console)
-		console.log(type + ": " + msg);
 }
 function displayBets(bets) {
 	$("#bettingArea tbody tr:not(:last-child)").remove();
@@ -52,7 +50,6 @@ function displayBets(bets) {
 		var html = "<tr><td>" + bet[0] + "</td><td>" + bet[1] + "</td><td><input type='button' value='X' class='bet-remove button-small button-border button-red' /></tr>";
 		$("#bettingArea tbody tr:last-child").before(html);
 	}
-	console.log(bets);
 }
 function updateBalances() {
 	socket2.emit('getWithdrawableBalance');
@@ -75,6 +72,7 @@ $(function() {
 	$("#btnReady").click(function() {
 		socket2.emit("ready");
 		$(this).removeClass("button-green").addClass("button-red").attr("disabled", "disabled").val("Readied!");
+		$("#bet-new-wrap .bet-zone, #bet-new-wrap .bet-amount, #bet-new-wrap #btnAddBet").attr("disabled", true);
 	});
 	$("#btnAddBet").click(function() {
 		var amt = parseFloat($("#txtBetAmount").val());
@@ -98,8 +96,24 @@ $(function() {
 		var betAmt = $(tds[1]).html();
 		socket2.emit("removeBet", { bet: betZone, amount: betAmt });
 	});
+	$("#btnWithdraw").click(function() {
+		var max = parseFloat($("#balance").html());
+		var amt = parseFloat(prompt("How much do you want to withdraw? You can currently withdraw up to " + max + " BTC.", "0.00"));
+		if (amt == NaN || amt <= 0 || amt > max) {
+			message("Error", "Invalid withdraw amount.");
+			return;
+		}
+		var addr = prompt("Please enter the address you want to withdraw to.", "");
+		if (confirm("Are you sure you want to withdraw " + amt + " BTC to the address '" + addr + "'?")) {
+			socket2.emit("withdraw", {
+				amount: amt,
+				address: addr
+			});
+		}
+	}).hide();
+	
 	// socket.io specific code
-	socket = io.connect(null, { rememberTransport: false });
+	socket = io.connect(null, { secure: true, port: 443, rememberTransport: false, 'reopen delay': 1000 });
 	socket.on('connect', function () {
 		//not much to do here...
 	});
@@ -107,7 +121,7 @@ $(function() {
 	socket.on('JoinRoom',function(msg){
 		Loader.hide();
 
-		socket2 = io.connect(msg);
+		socket2 = io.connect(msg, {secure: true, port: 443, rememberTransport: false, 'reopen delay': 1000 });
 		socket2.on('connect', function() {
 			var secret = window.location.hash.replace("#", "");
 			if (secret != "")
@@ -117,6 +131,7 @@ $(function() {
 			
 			socket2.emit('getDepositAddress');
 			socket2.emit('getSecret');
+			updateBalances();
 			
 			$("#room").html(parseInt(msg.replace("/", "")) + 1)
 			message('System','Joined room: ' + msg);
@@ -124,6 +139,7 @@ $(function() {
 			socket2.on('spin',function(msg) {
 				Wheel.spinToSlice(msg.spin);
 				$("#spinToHash").html(msg.spin + msg.salt);
+				$("#btnReady").removeClass("button-green").addClass("button-red").attr("disabled", "disabled").val("Readied!");
 				message('System','Spin: ' + msg.spin + ', Salt: ' + msg.salt);
 			});
 			socket2.on('newHash',function(msg) {
@@ -146,6 +162,13 @@ $(function() {
 				$("#ucbalance").html(msg);
 			});
 			socket2.on('WithdrawableBalance', function(msg) {
+				var amt = parseFloat(msg);
+				if (amt && amt >= 0.01)
+					$("#btnWithdraw").show();
+				
+				if (amt && amt < 0)
+					msg = "0";
+				
 				$("#balance").html(msg);
 			});
 			socket2.on('Secret',function(msg) {
@@ -185,6 +208,15 @@ $(function() {
 			})
 			socket2.on("exception", function(msg) {
 				message("Error", msg);
+			});
+			socket2.on("win", function(msg) {
+				message("System", "You just won a bet on " + msg.bet + " for " + msg.amount + " BTC, congratulations!");
+			});
+			socket2.on("loose", function(msg) {
+				message("System", "You just lost a bet on " + msg.bet + " for " + msg.amount + " BTC, sorry :(.");
+			});
+			socket2.on("withdraw", function(msg) {
+				message("System", "Withdrew funds successfully.");
 			});
 			setInterval(function() { 
 				socket2.emit('timeLeft');
